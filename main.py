@@ -1,13 +1,18 @@
 import pygame
 from pygame.locals import *
- 
+import Button
+import Constants
+import MatrixCell
+import Matrix
 # app is our main class
 class App:
     # class that will be called automatically at the beginning
+    # basically a constructor
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.weight, self.height = 1200, 800
+        self.size = self.weight, self.height = 1120, 1008
+
     
     # initialize all pygame modules
     def on_init(self):
@@ -15,17 +20,20 @@ class App:
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
 
-    # check if quit ever happens
+        self.letterMatrix = Matrix.Matrix(self._display_surf, 7)
+        self.letterMatrix.populateMatrix()
+
+    # check when quit happens
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
     
     # events happening each loop
     def on_loop(self):
-         # Fill the background with white
-        self._display_surf.fill((255, 255, 255))
-        # Draw a solid blue circle in the center
-        pygame.draw.circle(self._display_surf, (0, 0, 255), (250, 250), 75)
+        # fill the background with white
+        self._display_surf.fill(Constants.LIGHTGREEN)
+        # draw the matrix
+        self.letterMatrix.draw()
 
     # renders our objects each loop
     def on_render(self):
