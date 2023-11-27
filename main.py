@@ -4,6 +4,7 @@ import Button
 import Constants
 import MatrixCell
 import Matrix
+import random
 # app is our main class
 class App:
     # class that will be called automatically at the beginning
@@ -21,7 +22,20 @@ class App:
         self._running = True
 
         self.letterMatrix = Matrix.Matrix(self._display_surf, 7)
-        self.letterMatrix.populateMatrix()
+        
+        # get words from words.txt
+        word_list = []
+        words = []
+        text_file = open("words.txt", 'r')
+        lines = text_file.readlines()
+        text_file.close()
+        for i in range(len(lines)):
+            word_list.append(lines[i].strip())
+        words = random.sample(word_list, 7)
+
+        print(words)
+
+        self.letterMatrix.populateMatrix(words)
 
     # check when quit happens
     def on_event(self, event):
@@ -47,7 +61,7 @@ class App:
     def on_execute(self):
         if self.on_init() == False:
             self._running = False
- 
+        pygame.display.set_caption("Word Search Puzzle")
         while( self._running ):
             for event in pygame.event.get():
                 self.on_event(event)
