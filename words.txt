@@ -1,0 +1,17 @@
+hello
+world
+java
+apple
+lemon
+fox
+brown
+quick
+jumps
+over
+lazy
+dog
+frog
+tree
+beer
+candy
+white
