@@ -1,5 +1,5 @@
 # constants for the colors
-WHITE = (224 , 248, 208)
-LIGHTGREEN = (136, 192, 112)
-DARKGREEN = (52, 104, 86)
-BLACK = (8, 24, 23)
+WHITE = (255, 255, 255)
+LIGHTGREEN = (169, 169, 169)
+DARKGREEN = (84, 84, 84)
+BLACK = (0, 0, 0)
