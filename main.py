@@ -14,15 +14,13 @@ class App:
         self._display_surf = None
         self.size = self.weight, self.height = 1120, 1008
 
-    
     # initialize all pygame modules
     def on_init(self):
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
 
-        self.letterMatrix = Matrix.Matrix(self._display_surf, 7)
-        
+        self.letterMatrix = Matrix.Matrix(self._display_surf, 9)
         # get words from words.txt
         word_list = []
         words = []
@@ -34,25 +32,37 @@ class App:
         words = random.sample(word_list, 7)
 
         print(words)
-
+        # make words global to this class
+        # because it needs to be accessed by other functions too
+        self.words = [x.upper() for x in words]
         self.letterMatrix.populateMatrix(words)
+
+        # change the basic colors
+        Constants.WHITE = (224 , 248, 208)
+        Constants.LIGHTGREEN = (136, 192, 112)
+        Constants.DARKGREEN = (52, 104, 86)
+        Constants.BLACK = (8, 24, 23)
 
     # check when quit happens
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
+        self.letterMatrix.event(event, self.words)
     
     # events happening each loop
     def on_loop(self):
+        pass
+
+    # renders our objects each loop
+    def on_render(self):
+        pygame.display.flip()
         # fill the background with white
         self._display_surf.fill(Constants.LIGHTGREEN)
         # draw the matrix
         self.letterMatrix.draw()
 
-    # renders our objects each loop
-    def on_render(self):
-        pygame.display.flip()
-    
+
+
     # quits the game
     def on_cleanup(self):
         pygame.quit()
