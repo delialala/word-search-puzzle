@@ -1,6 +1,7 @@
 import pygame
 import Button
 import Constants
+import Matrix
 
 # matrix cell inherits from the Button class
 class MatrixCell(Button.Button):
@@ -22,7 +23,7 @@ class MatrixCell(Button.Button):
     def getText(self):
         return self.text
     # call this method to draw the button on the screen
-    def draw(self, win):
+    def draw(self, win, matrix_enabled):
         # check if theres any text and wrap the button size accordingly
         if self.text != '':
             font = pygame.font.Font('retro_computer_personal_use.ttf', size=self.fontSize)
@@ -39,7 +40,7 @@ class MatrixCell(Button.Button):
         letterColor = Constants.BLACK
 
         # draw selection box
-        if self.isOver()==True:
+        if self.isOver()==True and matrix_enabled == True:
             pygame.draw.rect(win, Constants.WHITE, (self.x-6, self.y-6, self.width+24, self.height+24), 0)
             # check if button is pressed
         if self.wasClicked == True or self.isClicked4ever == True:

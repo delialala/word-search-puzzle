@@ -58,11 +58,11 @@ class App:
         elif self.intro_page.in_intro_page:
             self.intro_page.click_start(event)
             self.intro_page.click_settings(event)
-            if self.intro_page.settings_popup.pop_up_shown == False:
-                self.intro_page.clickedSettings = False
+            self.intro_page.click_close(event)
         else:
             self.letterMatrix.event(event, self.words, found_words)
-            self.settings_button.click_settings_button(event)
+            self.settings_button.click_settings_button(event, self.letterMatrix)
+            self.settings_button.click_close_button(event, self.letterMatrix)
     
     # events happening each loop
     def on_loop(self):
@@ -99,8 +99,6 @@ class App:
                 self.on_event(event, found_words)
             self.on_loop()
             self.on_render()
-            self.intro_page.settings_popup.root.update_idletasks()
-            self.intro_page.settings_popup.root.update()
         self.on_cleanup()
  
 if __name__ == "__main__" :

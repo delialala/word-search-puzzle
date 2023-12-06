@@ -37,13 +37,13 @@ class WordList:
         for i, word in enumerate(self.words):
             list_font = pygame.font.Font("retro_computer_personal_use.ttf", size = self.fontSize)
             text_color = Constants.BLACK
-            # if the words are found in the matrix the are colored in white
+            # words are colored in the same color as the background when found in matrix
             if word in found_words:
                text_color = Constants.WHITE
             text = list_font.render(word, True, text_color)
             self.win.blit(text, (self.xStart, start_y + (i + 1) * self.wordGap))
 
-    #draws the list
+    # draws the list
     def draw(self, found_words):
         self.draw_rect()
         self.draw_list_title()

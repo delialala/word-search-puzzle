@@ -2,46 +2,37 @@ import pygame
 from pygame.locals import *
 import Constants
 import Button
-import tkinter as tk
-from tkinter import ttk
+import CloseButton
 
-# the settings pop up window
-class SettingsPopUp:
-    def __init__(self, win):
+# the pop up window for the settings
+class SettingsPopUp(Button.Button):
+    def __init__(self, win, x, y, width, height, title):
         self.win = win
-        self.root = tk.Tk()        
-        self.root.title("Settings")
-        self.root.geometry("300x400")
-        self.root.protocol("WM_DELETE_WINDOW", self.hide_settings_popup)
-        self.root.withdraw()
-        self.pop_up_shown = False
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.title = title
+        self.close_button = CloseButton.CloseButton(win, Constants.BLACK, x + width - 35, y + 12, 15, 20, 20, "X")
+        self.close = False
+        self.active = True
+        
+    # draw the settings pop up window
+    def draw(self):
+        if self.close == False:
+            # draw the window
+            pygame.draw.rect(self.win, Constants.WHITE, (self.x, self.y, self.width, self.height), 0)
+            pygame.draw.rect(self.win, Constants.BLACK, (self.x, self.y, self.width, self.height), 4)
 
-        # settings icon
-        self.root.iconbitmap("gear_retro.ico")
+            # draw the pop up settings window's title
+            title_font = pygame.font.Font("retro_computer_personal_use.ttf", 30)
+            title_text = title_font.render(self.title, True, Constants.DARKGREEN)
+            title = title_text.get_rect(center=(self.x + self.width // 2, self.y + 60))
+            self.win.blit(title_text, title)
 
-        # colors the background
-        self.root.configure(bg="DarkOliveGreen3")
+            # highlight the close button when the cursor is hovering over it
+            if self.close_button.isOver():
+                pygame.draw.rect(self.win, Constants.LIGHTGREEN, (1120 // 3 + 110 + 250 - 44, 1008 // 3 + 5, 40, 45), 0)
+            # draw the close button
+            self.close_button.draw()
 
-        # we will implement more buttons with different functionalities
-        # created a button
-        self.ok_button = tk.Button(
-            self.root, 
-            text="OK",
-            #command=,
-            font=("Franklin Gothic Book", 12, "bold"), 
-            fg="green", 
-            bg="white",
-            width=14,
-            borderwidth=3,
-            )
-        self.ok_button.pack(side=tk.BOTTOM, pady=10)
-
-    # the pop up window appears on the screen
-    def show_settings_popup(self):
-        self.pop_up_shown = True
-        self.root.deiconify()
-
-    # the pop up window is hidden
-    def hide_settings_popup(self):
-        self.root.withdraw()
-        self.pop_up_shown = False

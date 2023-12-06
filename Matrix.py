@@ -21,7 +21,7 @@ class Matrix():
         self.cellList = []
         self.InitialDirecton = "NOTCHOSEN"
         self.crtDirection = "NOTCHOSEN"
-        #self.wordList = word_list
+        self.matrix_enabled = True
 
     # will place the random word in a random direction if possible
     def place_word(self, word, direction):
@@ -176,7 +176,7 @@ class Matrix():
 
         # the matrix
         for crtCell in self.cells:
-            crtCell.draw(self.win)
+            crtCell.draw(self.win, self.matrix_enabled)
 
     # unclicks the currently selected cells
     def clearCellList(self):
@@ -217,6 +217,10 @@ class Matrix():
 
     def event(self, event, words, found_words):
         pos = pygame.mouse.get_pos()
+
+        # the matrix is disabled when the settings pop up window is on the screen
+        if self.matrix_enabled == False:
+            return
 
         # only activates if the cursor is inside the matrix
         if (pos[0] > self.xStart and pos[0] < self.xStart + self.borderSize
