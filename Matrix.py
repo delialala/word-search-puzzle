@@ -215,6 +215,7 @@ class Matrix():
                 return True
         return False
 
+
     def event(self, event, words, found_words):
         pos = pygame.mouse.get_pos()
 
@@ -251,6 +252,7 @@ class Matrix():
                 if pygame.mouse.get_pressed()[0] == False:
                     # check if the word formed can be found inside our world list
                     if self.formedWord in words:
+
                         found_words.append(self.formedWord)
                         print(f"{found_words}")
 
