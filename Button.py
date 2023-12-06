@@ -9,6 +9,7 @@ class Button():
         self.width = width
         self.height = height
         self.text = text
+        self.clicked = False
     # call this method to draw the button on the screen
     def draw(self, win, outline=None):
         # check if theres any text and wrap the button size accordingly

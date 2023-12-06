@@ -3,6 +3,7 @@ import Constants
 import MatrixCell
 import random
 from enum import Enum
+import WordList
 
 class Matrix():
     def __init__(self, win, length):
@@ -20,6 +21,7 @@ class Matrix():
         self.cellList = []
         self.InitialDirecton = "NOTCHOSEN"
         self.crtDirection = "NOTCHOSEN"
+        self.matrix_enabled = True
 
     # will place the random word in a random direction if possible
     def place_word(self, word, direction):
@@ -139,12 +141,13 @@ class Matrix():
         return True
 
     # populates the matrix with words placed in different directions
-    def getRandomMatrixWords(self, words):
+    def getRandomMatrixWords(self, words, words_in_matrix):
         for word in words:
             word = word.upper()
             direction = random.choice(["vertical", "horizontal", "diagonal"])
             print(f"{direction}")
-            self.place_word(word, direction)
+            if self.place_word(word, direction) == True:
+                words_in_matrix.append(word)
 
     # populates the empty matrix cells with random letters
     def getRandomMatrixLetters(self):
@@ -162,9 +165,9 @@ class Matrix():
             crtX = self.xStart
 
     # populates the matrix
-    def populateMatrix(self, words):
+    def populateMatrix(self, words, words_in_matrix):
         self.cells = [MatrixCell.MatrixCell(0, 0, self.fontSize, '') for _ in range(self.length * self.length)]
-        self.getRandomMatrixWords(words)
+        self.getRandomMatrixWords(words, words_in_matrix)
         self.getRandomMatrixLetters()
 
     def draw(self):
@@ -173,7 +176,7 @@ class Matrix():
 
         # the matrix
         for crtCell in self.cells:
-            crtCell.draw(self.win)
+            crtCell.draw(self.win, self.matrix_enabled)
 
     # unclicks the currently selected cells
     def clearCellList(self):
@@ -212,8 +215,13 @@ class Matrix():
                 return True
         return False
 
-    def event(self, event, words):
+
+    def event(self, event, words, found_words):
         pos = pygame.mouse.get_pos()
+
+        # the matrix is disabled when the settings pop up window is on the screen
+        if self.matrix_enabled == False:
+            return
 
         # only activates if the cursor is inside the matrix
         if (pos[0] > self.xStart and pos[0] < self.xStart + self.borderSize
@@ -248,8 +256,9 @@ class Matrix():
                 if pygame.mouse.get_pressed()[0] == False:
                     # check if the word formed can be found inside our world list
                     if self.formedWord in words:
-                        # TODO: call the function for crossing out a word from the list HERE
 
+                        found_words.append(self.formedWord)
+                        print(f"{found_words}")
 
                         # the cells remain clicked forever
                         for myCell in self.cellList:
@@ -263,4 +272,3 @@ class Matrix():
         else:
             self.formedWord = ''
             self.clearCellList()
-
