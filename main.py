@@ -51,6 +51,13 @@ class App:
         self.wordList = WordList.WordList(self._display_surf, self.words)
         self.settings_button = SettingsButton.SettingsButton(self._display_surf, 70, 800, 20, "SETTINGS")
 
+
+        # change the basic colors
+        Constants.WHITE = (224 , 248, 208)
+        Constants.LIGHTGREEN = (136, 192, 112)
+        Constants.DARKGREEN = (52, 104, 86)
+        Constants.BLACK = (8, 24, 23)
+
     # check when quit happens
     def on_event(self, event, found_words):
         if event.type == pygame.QUIT:
@@ -61,8 +68,13 @@ class App:
             self.intro_page.click_close(event)
         else:
             self.letterMatrix.event(event, self.words, found_words)
+<<<<<<< HEAD
             self.settings_button.click_settings_button(event, self.letterMatrix)
             self.settings_button.click_close_button(event, self.letterMatrix)
+=======
+            self.settings_button.click_settings_button(event)
+
+>>>>>>> origin/DIANA
     
     # events happening each loop
     def on_loop(self):
@@ -82,8 +94,6 @@ class App:
             self.wordList.draw(found_words)
             # draw the settings button on main game window
             self.settings_button.draw()
-
-        pygame.display.flip()
 
     # quits the game
     def on_cleanup(self):
