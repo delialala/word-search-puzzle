@@ -13,7 +13,9 @@ class SettingsPopUp(Button.Button):
         self.width = width
         self.height = height
         self.title = title
-        self.close_button = CloseButton.CloseButton(win, Constants.BLACK, x + width - 35, y + 12, 15, 20, 20, "X")
+        self.xCloseButton = x + width - 70
+        self.yCloseButton = y + 40
+        self.close_button = CloseButton.CloseButton(self.xCloseButton, self.yCloseButton - 30, 30, 10, 10)
         self.close = False
         self.active = True
         
@@ -21,18 +23,16 @@ class SettingsPopUp(Button.Button):
     def draw(self):
         if self.close == False:
             # draw the window
-            pygame.draw.rect(self.win, Constants.WHITE, (self.x, self.y, self.width, self.height), 0)
-            pygame.draw.rect(self.win, Constants.BLACK, (self.x, self.y, self.width, self.height), 4)
+            pygame.draw.rect(self.win, Constants.WHITE, (self.x-16, self.y-16, self.width+32, self.height+32), 0)
+            pygame.draw.rect(self.win, Constants.DARKGREEN, (self.x-8, self.y-8, self.width+16, self.height+16), 0)
+            pygame.draw.rect(self.win, Constants.LIGHTGREEN, (self.x, self.y, self.width, self.height), 0)
 
             # draw the pop up settings window's title
-            title_font = pygame.font.Font("retro_computer_personal_use.ttf", 30)
+            title_font = pygame.font.Font("resources/retro_computer_personal_use.ttf", 30)
             title_text = title_font.render(self.title, True, Constants.DARKGREEN)
-            title = title_text.get_rect(center=(self.x + self.width // 2, self.y + 60))
+            title = title_text.get_rect(center=(self.x + 120, self.yCloseButton))
             self.win.blit(title_text, title)
-
-            # highlight the close button when the cursor is hovering over it
-            if self.close_button.isOver():
-                pygame.draw.rect(self.win, Constants.LIGHTGREEN, (1120 // 3 + 110 + 250 - 44, 1008 // 3 + 5, 40, 45), 0)
+            pygame.draw.rect(self.win, Constants.DARKGREEN, (self.x + 35, self.yCloseButton + 27, self.width - 50, 6), 0)
             # draw the close button
-            self.close_button.draw()
+            self.close_button.draw(self.win)
 

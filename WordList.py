@@ -20,7 +20,7 @@ class WordList:
 
     # draws the list title and the underline
     def draw_list_title(self):
-        title_font = pygame.font.Font("retro_computer_personal_use.ttf", 25)
+        title_font = pygame.font.Font("resources/retro_computer_personal_use.ttf", 25)
         title = title_font.render("WORD LIST", True, Constants.BLACK)
         title_rect = title.get_rect()
         title_rect.midtop = (self.xStart + 95, self.yStart)
@@ -35,7 +35,7 @@ class WordList:
         start_y = self.yStart + self.wordGap - 20
         # puts the words in the list
         for i, word in enumerate(self.words):
-            list_font = pygame.font.Font("retro_computer_personal_use.ttf", size = self.fontSize)
+            list_font = pygame.font.Font("resources/retro_computer_personal_use.ttf", size = self.fontSize)
             text_color = Constants.BLACK
             # words are colored in the same color as the background when found in matrix
             if word in found_words:

@@ -14,7 +14,7 @@ class Button():
     def draw(self, win, outline=None):
         # check if theres any text and wrap the button size accordingly
         if self.text != '':
-            font = pygame.font.Font('retro_computer_personal_use.ttf', size = self.fontSize)
+            font = pygame.font.Font('resources/retro_computer_personal_use.ttf', size = self.fontSize)
             text = font.render(self.text, 1, Constants.WHITE)
             self.width = text.get_width() + 10
             self.height = text.get_height() + 10

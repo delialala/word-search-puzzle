@@ -2,9 +2,7 @@ import pygame
 from pygame.locals import *
 import Button
 import Constants
-import SettingsPopUp
-import Matrix
-
+import ThemesListPopUp
 # the settings button for the main game page
 class SettingsButton(Button.Button):
     def __init__(self, win, xStart, yStart, fontSize, textCell=''):
@@ -17,7 +15,7 @@ class SettingsButton(Button.Button):
         self.clicked_settings = False
 
         # an instance of the pop up window
-        self.settings_popup = SettingsPopUp.SettingsPopUp(self.win, 1120 // 3 + 10, 1008 // 3, 350, 550, "SETTINGS")
+        self.settings_popup = ThemesListPopUp.ThemesListPopUp(self.win, 170, 300, 800, 500, "THEMES")
         self.settings_popup.active = False
 
         # the gear image on the button

@@ -1,85 +1,104 @@
 import pygame
 from pygame.locals import *
 import Constants
-import Button
-import SettingsPopUp
-
+import ThemesListPopUp
+import StartscreenButton
+import GameSettingsPopUp
 class Intro:
+
     def __init__(self, win):
         self.win = win
         self.in_intro_page = True
         self.width = 1120
         self.height = 1008
         self.clickedStart = False
-        self.clickedSettings = False
+        self.clickedThemes = False
+        # instances for the start and themes buttons
+        self.start_button = StartscreenButton.StartscreenButton(570, 550, "START")
+        self.themes_button = StartscreenButton.StartscreenButton(570, 650, "THEMES")
 
-        # title and font set up
-        self.title_font = pygame.font.Font("retro_computer_personal_use.ttf", 45)
-        self.title = self.title_font.render("Word Spy", True, Constants.BLACK)
+        # an instance for the pop up window for the themes
+        self.themes_popup = ThemesListPopUp.ThemesListPopUp(self.win, 170, 300, 800, 500, "THEMES")
+        self.themes_popup.active = False
 
-        # instances for the start and settings buttons
-        self.start_button = Button.Button(Constants.BLACK, self.width // 2 - 200 // 2 + 30, 400, 30, 200, 50, "START")
-        self.settings_button = Button.Button(Constants.BLACK, self.width // 2 - 110, 500, 30, 200, 50, "SETTINGS")
-
-        # an instance for the pop up window
-        self.settings_popup = SettingsPopUp.SettingsPopUp(self.win, self.width // 3 + 10, self.height // 3, 350, 550, "SETTINGS")
+        # an instance for the pop up window for the game settings
+        self.settings_popup = GameSettingsPopUp.GameSettingsPopUp(self.win, 170, 300, 800, 500, "SETTINGS")
         self.settings_popup.active = False
+
+        # load the image for the titlescreen
+        self.titleScreenImage = Constants.titleScreenImage
+
+        # load the image for the title
+        self.titleImage = Constants.titleImage
 
 
     def draw(self):
         self.win.fill(Constants.LIGHTGREEN)
 
+        self.win.blit(self.titleScreenImage, (0, 0))
         # draw game title
-        title = self.title.get_rect(center=(self.width // 2, self.height // 4))
-        self.win.blit(self.title, title)
-
-        # draw highlight on buttons when the mouse hovers over them
-        if self.start_button.isOver()==True:
-            pygame.draw.rect(self.win, Constants.WHITE, (self.width // 2 - 200 // 2 + 18, 400 - 10, 150 + 14, 50 + 20), 0)
-
-        if self.settings_button.isOver()==True:
-            pygame.draw.rect(self.win, Constants.WHITE, (self.width // 2 - 110 - 12, 500 - 12, 200 + 24 + 15, 50 + 24), 0)
-
-        # change the highligh color when the buttons are clicked
-        if self.clickedStart == True:
-            pygame.draw.rect(self.win, Constants.BLACK, (self.width // 2 - 200 // 2 + 18, 400 - 10, 150 + 14, 50 + 20), 0)
-
-        if self.clickedSettings == True:
-            pygame.draw.rect(self.win, Constants.BLACK, (self.width // 2 - 110 - 12, 500 - 12, 200 + 24 + 15, 50 + 24), 0)
-
+        self.win.blit(self.titleImage, (380, 380))
         # draw the buttons
-        self.start_button.draw(self.win, Constants.DARKGREEN)
-        self.settings_button.draw(self.win, Constants.DARKGREEN)
+
+        self.start_button.draw(self.win)
+        self.themes_button.draw(self.win)
 
         # draw the pop up window after user clicks on settings button
-        if self.clickedSettings == True:
+        if self.clickedThemes == True:
+            self.themes_popup.draw()
+        if self.clickedStart == True:
             self.settings_popup.draw()
 
     # click start -> get to game window
     def click_start(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and self.in_intro_page:
-            if self.start_button.isOver() and self.settings_popup.active == False:
+            if self.start_button.isOver() and self.themes_popup.active == False and self.settings_popup.active == False:
+                print("hello")
                 self.clickedStart = True
+                self.settings_popup.active = True
                 self.draw()
                 pygame.display.flip()
-                self.in_intro_page = False
+                #self.in_intro_page = False
 
     # click on settings -> pop up settings window appears
     def click_settings(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and self.in_intro_page:
-            if self.settings_button.isOver():
-                self.clickedSettings = True
+            if self.themes_button.isOver():
+                self.clickedThemes = True
                 # pop up appears on screen
-                self.settings_popup.active = True
+                self.themes_popup.active = True
                 self.draw()
                 pygame.display.flip()
 
     # click on "X" -> the pop up window closes
     def click_close(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and self.in_intro_page:
-            if self.clickedSettings and self.settings_popup.close_button.isOver():
-                self.clickedSettings = False
+            if (self.clickedThemes or self.clickedStart) and self.themes_popup.close_button.isOver():
+                Constants.CNT = 0
+                self.clickedStart = False
+                self.clickedThemes = False
                 # pop up disappears
+                self.themes_popup.active = False
                 self.settings_popup.active = False
                 self.draw()
                 pygame.display.flip()
+
+    # click on the start in the settings button
+    def click_start_in_settings(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and self.in_intro_page:
+            if self.settings_popup.active and self.settings_popup.startButton.isOver():
+                self.settings_popup.active = False
+                self.in_intro_page = False
+                self.clickedStart = False
+
+    # events when themes is clicked
+    def clickTheme(self, event):
+        if self.in_intro_page and self.clickedThemes and self.themes_popup.active:
+            self.themes_popup.eventTheme(event)
+            pygame.display.flip()
+
+    # events when start is clicked
+    def clickGameSettings(self, event):
+        if self.in_intro_page and self.clickedStart and self.settings_popup.active:
+            self.settings_popup.event(event)
+            pygame.display.flip()
