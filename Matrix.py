@@ -267,10 +267,7 @@ class Matrix():
                         # the cells remain clicked forever
                         for myCell in self.cellList:
                             myCell.setIsClicked4ever(True)
-                        self.cellList = []
-                    else:
-                        # unclick the cells if not
-                        self.clearCellList()
+                    self.clearCellList()
                     self.formedWord = ''
         # if outside the matrix, clear the list
         else:
