@@ -12,6 +12,7 @@ class ReturnButton(Button.Button):
         self.xStart = 70
         self.yStart = 800
         self.is_enabled = True
+        self.clicked = False
 
         self.button_image = Constants.arrow
 
@@ -30,5 +31,5 @@ class ReturnButton(Button.Button):
     def event(self, event, intro):
        if event.type == pygame.MOUSEBUTTONDOWN and self.is_enabled:
             if self.isOver():
-                intro.in_intro_page = True
+                self.clicked = True
 

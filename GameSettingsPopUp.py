@@ -10,7 +10,7 @@ class GameSettingsPopUp(SettingsPopUp.SettingsPopUp):
     def __init__(self, win, x, y, width, height, title):
         super().__init__(win, x, y, width, height, title)
         self.startButton = StartscreenButton.StartscreenButton(420, 700, "START")
-        self.matrixSizeList = (9, 10, 11, 12)
+        self.matrixSizeList = (5, 6, 7, 8, 9)
         self.matrixSizeChooser = ThingieChooser.ThingieChooser(win, self.matrixSizeList, 600, 390)
         self.matrix_size = 1
 

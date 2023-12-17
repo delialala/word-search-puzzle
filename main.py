@@ -125,6 +125,10 @@ class App:
                     self.hintPopUp.close = False
                     self.hintButton.clicked_hint = False
 
+                # click return button -> go to intro game page
+                if self.returnButton.clicked == True:
+                    self.reset_and_return()
+
                 # the matrix will not work when there is a pop up on the screen
                 if self.congratsPopUp.active or self.uhohPopUp.active or self.hintPopUp.active:
                     #print("OK")
@@ -186,9 +190,13 @@ class App:
                 text_file = open("words.txt", 'r')
             lines = text_file.readlines()
             text_file.close()
+            aux = 0
             for i in range(len(lines)):
-                    word_list.append(lines[i].strip())
-            words = random.sample(word_list, 30)
+                cuv = lines[i].strip()
+                if len(cuv) <= matrix_size:
+                    word_list.append(cuv)
+                    aux += 1
+                words = random.sample(word_list, aux)
             print(words)
             
             self.letterMatrix.populateMatrix(words, words_in_matrix, word_positions, word_directions)
@@ -206,6 +214,7 @@ class App:
     # resets the game and goes from the main game page to the intro page
     # used by the MainScreenButton
     def reset_and_return(self):
+        self.intro_page.settings_popup.timer_running = False
         self.intro_page.in_intro_page = True
         self.intro_page.toMain = False
         self.main_game_initialized = False
