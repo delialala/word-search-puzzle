@@ -24,24 +24,26 @@ class Matrix():
         self.matrix_enabled = True
 
     # will place the random word in a random direction if possible
-    def place_word(self, word, direction):
+    def place_word(self, word, direction, word_positions, word_directions):
         if direction == "vertical":
-            placement = self.place_vertical(word)
+            placement = self.place_vertical(word, word_positions)
         elif direction == "horizontal":
-            placement = self.place_horizontal(word)
+            placement = self.place_horizontal(word, word_positions)
         elif direction == "diagonal":
-            placement = self.place_diagonal(word)
+            placement = self.place_diagonal(word, word_positions)
         
+        word_directions[word] = direction
         if placement == True:
             return True
         return False
 
     # vertical word placement
-    def place_vertical(self, word):
+    def place_vertical(self, word, word_positions):
         crtX = self.xStart
         crtY = self.yStart
         rand_row = random.randint(0, self.length - len(word))
         rand_col = random.randint(0, self.length - 1)
+        word_positions[word] = (rand_row, rand_col)
         print(f"{rand_row} {rand_col}")
 
         row = rand_row
@@ -71,11 +73,12 @@ class Matrix():
         return True
 
     # horizontal word placement
-    def place_horizontal(self, word):
+    def place_horizontal(self, word, word_positions):
         crtX = self.xStart
         crtY = self.yStart
         rand_row = random.randint(0, self.length - 1)
         rand_col = random.randint(0, self.length - len(word))
+        word_positions[word] = (rand_row, rand_col)
         print(f"{rand_row} {rand_col}")
 
         col = rand_col
@@ -104,11 +107,12 @@ class Matrix():
         return True
 
     # diagonal word placement
-    def place_diagonal(self, word):
+    def place_diagonal(self, word, word_positions):
         crtX = self.xStart
         crtY = self.yStart
         rand_row = random.randint(0, self.length - len(word))
         rand_col = random.randint(0, self.length - len(word))
+        word_positions[word] = (rand_row, rand_col)
         print(f"{rand_row} {rand_col}")
 
         row = rand_row
@@ -141,12 +145,12 @@ class Matrix():
         return True
 
     # populates the matrix with words placed in different directions
-    def getRandomMatrixWords(self, words, words_in_matrix):
+    def getRandomMatrixWords(self, words, words_in_matrix, word_positions, word_directions):
         for word in words:
             word = word.upper()
             direction = random.choice(["vertical", "horizontal", "diagonal"])
             print(f"{direction}")
-            if self.place_word(word, direction) == True:
+            if self.place_word(word, direction, word_positions, word_directions) == True:
                 words_in_matrix.append(word)
 
     # populates the empty matrix cells with random letters
@@ -165,15 +169,15 @@ class Matrix():
             crtX = self.xStart
 
     # populates the matrix
-    def populateMatrix(self, words, words_in_matrix):
+    def populateMatrix(self, words, words_in_matrix, word_positions, word_directions):
         self.cells = [MatrixCell.MatrixCell(0, 0, self.fontSize, '') for _ in range(self.length * self.length)]
-        self.getRandomMatrixWords(words, words_in_matrix)
+        self.getRandomMatrixWords(words, words_in_matrix, word_positions, word_directions)
         self.getRandomMatrixLetters()
 
     def draw(self):
         # the border
         pygame.draw.rect(self.win, Constants.DARKGREEN, (self.xStart + 4, self.yStart + 4, self.borderSize, self.borderSize), 0)
-
+        #pygame.draw.rect(self.win, Constants.BLACK,(200,500,900,900), 0)
         # the matrix
         for crtCell in self.cells:
             crtCell.draw(self.win, self.matrix_enabled)
@@ -219,7 +223,7 @@ class Matrix():
     def event(self, event, words, found_words):
         pos = pygame.mouse.get_pos()
 
-        # the matrix is disabled when the settings pop up window is on the screen
+        # the matrix is disabled when there is a pop up window on the screen
         if self.matrix_enabled == False:
             return
 

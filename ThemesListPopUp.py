@@ -101,9 +101,8 @@ class ThemesListPopUp(SettingsPopUp.SettingsPopUp):
             self.changeEverything((247, 219, 126, 0), (224, 110, 22, 0), (25, 105, 44, 0), (20, 43, 35, 0))
         if(self.themesList[i] == "NEERG CISSALC"):
             self.changeEverything((9, 25, 24, 0), (53, 105, 87, 0), (137, 193, 113, 0), (225 , 249, 209, 0))
-        # TODO: choose your theme!
         if(self.themesList[i] == "DIANAS CHOICE"):
-            self.changeEverything((224 , 248, 208, 0), (136, 192, 112, 0), (52, 104, 86, 0), (8, 24, 23, 0))
+            self.changeEverything((248 , 156, 240, 0), (208, 58, 193, 0), (27, 111, 157, 0), (136, 7, 174, 0))
         if(self.themesList[i] == "FOOTBALL"):
             self.changeEverything((235, 238, 231, 0), (134, 135, 121, 0), (170, 33, 29, 0), (42, 32, 30, 0))
         if(self.themesList[i] == "PEACH PARTY"):
