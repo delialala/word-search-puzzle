@@ -7,8 +7,8 @@ class ThingieChooser:
         self.list = list
         self.x = x
         self.y = y
-        self.arrowLeft = Arrow.Arrow(win, x, y, "right")
-        self.arrowRight = Arrow.Arrow(win, x + 200, y, "left")
+        self.arrowLeft = Arrow.Arrow(win, x - 100, y, "right")#x
+        self.arrowRight = Arrow.Arrow(win, x + 200, y, "left")#x+200
         self.crt = 0
 
     def draw(self):
@@ -17,7 +17,9 @@ class ThingieChooser:
 
         font = pygame.font.Font("resources/retro_computer_personal_use.ttf", 30)
         matrixSizeText = font.render(str(self.list[self.crt]), True, Constants.DARKGREEN)
-        self.win.blit(matrixSizeText, (self.x + 120, self.y, 200, 200))
+        item_width = matrixSizeText.get_width()
+        text_x = self.x + 80 - item_width/2
+        self.win.blit(matrixSizeText, (text_x, self.y, 200, 200))#x+120
     
     # decrease or increase the current index
     def event(self, event):
@@ -30,5 +32,4 @@ class ThingieChooser:
             self.crt = self.crt + 1
             if self.crt == len(self.list):
                 self.crt = 0
-
 

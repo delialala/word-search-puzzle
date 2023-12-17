@@ -13,6 +13,7 @@ class Intro:
         self.height = 1008
         self.clickedStart = False
         self.clickedThemes = False
+        self.toMain = False
         # instances for the start and themes buttons
         self.start_button = StartscreenButton.StartscreenButton(570, 550, "START")
         self.themes_button = StartscreenButton.StartscreenButton(570, 650, "THEMES")
@@ -90,6 +91,7 @@ class Intro:
                 self.settings_popup.active = False
                 self.in_intro_page = False
                 self.clickedStart = False
+                self.toMain = True
 
     # events when themes is clicked
     def clickTheme(self, event):
@@ -98,7 +100,7 @@ class Intro:
             pygame.display.flip()
 
     # events when start is clicked
-    def clickGameSettings(self, event):
+    def clickGameSettings(self, event, all_words):
         if self.in_intro_page and self.clickedStart and self.settings_popup.active:
-            self.settings_popup.event(event)
+            self.settings_popup.event(event, all_words)
             pygame.display.flip()
