@@ -262,7 +262,6 @@ class Matrix():
                     if self.formedWord in words:
 
                         found_words.append(self.formedWord)
-                        print(f"{found_words}")
 
                         # the cells remain clicked forever
                         for myCell in self.cellList:
