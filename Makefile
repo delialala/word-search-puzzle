@@ -1,4 +1,4 @@
-CC = pyhton3
+CC = python3
 
 all: run
 
@@ -6,4 +6,4 @@ run:
 	$(CC) main.py
 
 clean:
-	rim -rf __pycache__
+	rm -rf __pycache__
