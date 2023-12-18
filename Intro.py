@@ -54,7 +54,6 @@ class Intro:
     def click_start(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and self.in_intro_page:
             if self.start_button.isOver() and self.themes_popup.active == False and self.settings_popup.active == False:
-                print("hello")
                 self.clickedStart = True
                 self.settings_popup.active = True
                 self.draw()
