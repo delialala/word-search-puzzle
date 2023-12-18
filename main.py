@@ -93,7 +93,7 @@ class App:
                 # draw the matrix
                 self.letterMatrix.draw()
                 # draw the word list
-                self.wordList.draw(found_words, False)
+                self.wordList.draw(found_words)
                 # draw hint button
                 self.hintButton.draw()
                 # draw return button
@@ -197,11 +197,9 @@ class App:
                     word_list.append(cuv)
                     aux += 1
                 words = random.sample(word_list, aux)
-            print(words)
             
             self.letterMatrix.populateMatrix(words, words_in_matrix, word_positions, word_directions)
             self.words = [x.upper() for x in words_in_matrix]
-            print(f"{len(self.words)}")
             self.wordList = WordList.WordList(self._display_surf, self.words)
             self.returnButton = ReturnButton.ReturnButton(self._display_surf, 70, 800)
             self.congratsPopUp = CongratsPopUp.CongratsPopUp(self._display_surf, 325, 350, 500, 300, "CONGRATS!")

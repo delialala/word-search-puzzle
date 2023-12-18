@@ -22,6 +22,7 @@ class Matrix():
         self.InitialDirecton = "NOTCHOSEN"
         self.crtDirection = "NOTCHOSEN"
         self.matrix_enabled = True
+        self.stop_adding_words = False
 
     # will place the random word in a random direction if possible
     def place_word(self, word, direction, word_positions, word_directions):
@@ -44,7 +45,6 @@ class Matrix():
         rand_row = random.randint(0, self.length - len(word))
         rand_col = random.randint(0, self.length - 1)
         word_positions[word] = (rand_row, rand_col)
-        print(f"{rand_row} {rand_col}")
 
         row = rand_row
         for i in range(len(word)):
@@ -79,7 +79,6 @@ class Matrix():
         rand_row = random.randint(0, self.length - 1)
         rand_col = random.randint(0, self.length - len(word))
         word_positions[word] = (rand_row, rand_col)
-        print(f"{rand_row} {rand_col}")
 
         col = rand_col
         for i in range(len(word)):
@@ -113,7 +112,6 @@ class Matrix():
         rand_row = random.randint(0, self.length - len(word))
         rand_col = random.randint(0, self.length - len(word))
         word_positions[word] = (rand_row, rand_col)
-        print(f"{rand_row} {rand_col}")
 
         row = rand_row
         col = rand_col
@@ -149,9 +147,11 @@ class Matrix():
         for word in words:
             word = word.upper()
             direction = random.choice(["vertical", "horizontal", "diagonal"])
-            print(f"{direction}")
             if self.place_word(word, direction, word_positions, word_directions) == True:
-                words_in_matrix.append(word)
+                if self.stop_adding_words == False:
+                    words_in_matrix.append(word)
+                    if len(words_in_matrix) == 15:
+                        self.stop_adding_words = True
 
     # populates the empty matrix cells with random letters
     def getRandomMatrixLetters(self):

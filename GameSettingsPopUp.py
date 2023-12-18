@@ -82,5 +82,3 @@ class GameSettingsPopUp(SettingsPopUp.SettingsPopUp):
         if self.timer_running and self.timer != 'N/A':
             if self.timer_left > 0: 
                 self.timer_left -= 1000
-                print(f"{self.timer_left}")
-

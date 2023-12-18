@@ -23,7 +23,7 @@ class HintPopUp(SettingsPopUp.SettingsPopUp):
             if word not in found_words:
                 text = text_font.render(word, True, Constants.DARKGREEN)
                 # draw word
-                self.win.blit(text, (self.x + 20, self.y + 80 + i * 40))
+                self.win.blit(text, (self.x + 20, self.y + 80 + i * 35))
                 # the current word matches the saved index -> dislpay hints
                 if self.index == i:
                     if word in word_positions:
@@ -34,7 +34,7 @@ class HintPopUp(SettingsPopUp.SettingsPopUp):
                         text = f"Row: {row}, Col: {col}, Pos: {dir}"
                         text_render = text_font.render(text, True, Constants.DARKGREEN)
                         # draw hints
-                        self.win.blit(text_render,(self.x + 200, self.y + 80 + i*40))
+                        self.win.blit(text_render,(self.x + 200, self.y + 80 + i*35))
 
     # draw the window
     def draw(self, found_words, word_positions, word_directions):
@@ -54,13 +54,12 @@ class HintPopUp(SettingsPopUp.SettingsPopUp):
     def click_word(self, event, found_words, word_positions):
         text_font = pygame.font.Font('resources/retro_computer_personal_use.ttf', 20)
         # click happens
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and self.active == True:
             x, y=event.pos
             for i, word in enumerate(self.words):
                 if word not in found_words:
                     # checks if the click is within bounds of th word in the list
                     if (self.x+20 <= x <= self.x + 20 + text_font.size(word)[0] and
-                    self.y+ 80 + i*40 <= y <= self.y + 80 + i*40 + text_font.size(word)[1]):
+                    self.y+ 80 + i*35 <= y <= self.y + 80 + i*35 + text_font.size(word)[1]):
                         # will save the index
                         self.index = i
-                        print("Word pressed: ", word)

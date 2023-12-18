@@ -31,13 +31,10 @@ class WordList:
 
     # draws the words on the list 
     # and colors the found words in the same color as the background 
-    def draw_words(self, found_words, reset):
+    def draw_words(self, found_words):
         start_y = self.yStart + self.wordGap - 20
         # puts the words in the list
-        if reset == True:
-            start_y = self.yStart + self.wordGap - 20
         for i, word in enumerate(self.words):
-            #print(f"{len(self.words)}")
             list_font = pygame.font.Font("resources/retro_computer_personal_use.ttf", size = self.fontSize)
             text_color = Constants.BLACK
             # words are colored in the same color as the background when found in matrix
@@ -47,7 +44,7 @@ class WordList:
             self.win.blit(text, (self.xStart, start_y + (i + 1) * self.wordGap))
 
     # draws the list
-    def draw(self, found_words, reset):
+    def draw(self, found_words):
         self.draw_rect()
         self.draw_list_title()
-        self.draw_words(found_words, reset)
+        self.draw_words(found_words)
